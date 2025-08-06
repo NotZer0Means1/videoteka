@@ -1,0 +1,76 @@
+/* Auth Pages Styles - Registration and Login */
+
+/* Auth page container */
+.auth-container {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+/* Auth card */
+.auth-card {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 188, 212, 0.1);
+}
+
+/* Header */
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-header h1 {
+    color: #00bcd4;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.auth-header p {
+    color: #b0b0b0;
+    font-size: 16px;
+}
+
+/* Alerts */
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.alert-error {
+    background-color: #4a1a1a;
+    border: 1px solid #ff4444;
+    color: #ffaaaa;
+}
+
+.alert-success {
+    background-color: #1a4a3a;
+    border: 1px solid #00ff88;
+    color: #88ffaa;
+}
+
+.alert ul {
+    list-style: none;
+    margin: 0;
+}
+
+.alert li {
+    margin-bottom: 5px;
+}
+
+/* Form styles */
+.auth-form {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}

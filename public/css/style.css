@@ -1,0 +1,424 @@
+/* Videoteka - Main Stylesheet */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.header {
+    background-color: #1a1a1a;
+    padding: 15px 0;
+    border-bottom: 2px solid #00bcd4;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00bcd4;
+    text-shadow: 0 0 10px #00bcd4;
+}
+
+.menu {
+    display: flex;
+    gap: 20px;
+}
+
+.menu a {
+    color: #e0e0e0;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.menu a:hover {
+    background-color: #00bcd4;
+    color: #000;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: #00bcd4;
+    color: #000;
+}
+
+.btn-primary:hover {
+    background-color: #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #00bcd4;
+    border: 1px solid #00bcd4;
+}
+
+.btn-outline:hover {
+    background-color: #00bcd4;
+    color: #000;
+}
+
+.btn-large {
+    padding: 15px 30px;
+    font-size: 16px;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 100px 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #00bcd4;
+    text-shadow: 0 0 20px rgba(0, 188, 212, 0.5);
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: #b0b0b0;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin: 40px 0;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 36px;
+    font-weight: bold;
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff;
+}
+
+.stat-label {
+    color: #b0b0b0;
+    font-size: 14px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+/* Search Section */
+.search-section {
+    background-color: #2a2a2a;
+    padding: 40px 0;
+    border-bottom: 1px solid #444;
+}
+
+.search-box {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    gap: 10px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 15px 20px;
+    background-color: #1a1a1a;
+    border: 2px solid #00bcd4;
+    border-radius: 25px;
+    color: #e0e0e0;
+    font-size: 16px;
+}
+
+.search-input:focus {
+    outline: none;
+    box-shadow: 0 0 20px rgba(0, 188, 212, 0.3);
+}
+
+.search-btn {
+    padding: 15px 25px;
+    background-color: #00bcd4;
+    border: none;
+    border-radius: 25px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.search-btn:hover {
+    background-color: #00ffff;
+}
+
+/* Featured Movies */
+.featured-movies {
+    padding: 60px 0;
+    background-color: #121212;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: #00bcd4;
+}
+
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.movie-card {
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #333;
+    transition: all 0.3s;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    border-color: #00bcd4;
+    box-shadow: 0 10px 30px rgba(0, 188, 212, 0.2);
+}
+
+.movie-poster {
+    height: 300px;
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00bcd4;
+    font-size: 48px;
+    position: relative;
+}
+
+.movie-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.movie-card:hover .movie-overlay {
+    opacity: 1;
+}
+
+.movie-info {
+    padding: 20px;
+}
+
+.movie-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.movie-meta {
+    display: flex;
+    justify-content: space-between;
+    color: #b0b0b0;
+    font-size: 14px;
+}
+
+.movie-rating {
+    color: #00bcd4;
+    font-weight: bold;
+}
+
+/* Features Section */
+.features {
+    padding: 60px 0;
+    background-color: #1a1a1a;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.feature-card {
+    text-align: center;
+    padding: 30px 20px;
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    border: 1px solid #444;
+}
+
+.feature-icon {
+    font-size: 48px;
+    color: #00bcd4;
+    margin-bottom: 20px;
+}
+
+.feature-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.feature-desc {
+    color: #b0b0b0;
+    line-height: 1.6;
+}
+
+/* Footer */
+.footer {
+    background-color: #0a0a0a;
+    padding: 40px 0;
+    border-top: 2px solid #00bcd4;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+}
+
+.footer-section h3 {
+    color: #00bcd4;
+    margin-bottom: 20px;
+}
+
+.footer-section p {
+    color: #b0b0b0;
+    line-height: 1.6;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links a {
+    color: #b0b0b0;
+    text-decoration: none;
+    line-height: 2;
+}
+
+.footer-links a:hover {
+    color: #00bcd4;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+    color: #666;
+}
+
+/* Cookie Banner */
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #1a1a1a;
+    border-top: 2px solid #00bcd4;
+    padding: 20px;
+    display: none;
+    z-index: 1000;
+}
+
+.cookie-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.cookie-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .hero-stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search-box {
+        flex-direction: column;
+    }
+
+    .movies-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .cookie-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
