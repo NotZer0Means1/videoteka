@@ -1,20 +1,14 @@
 <?php
-/**
- * Database Configuration
- * Simple database connection for videoteka
- */
 
 class Database {
     private static $instance = null;
     private $pdo;
     
-    // Database settings
     private $host = 'localhost';
     private $dbname = 'videoteka';
     private $username = 'root';
     private $password = '';
     
-    // Private constructor (Singleton pattern)
     private function __construct() {
         try {
             $dsn = "mysql:host={$this->host};dbname={$this->dbname};charset=utf8mb4";
@@ -30,7 +24,6 @@ class Database {
         }
     }
     
-    // Get instance (Singleton)
     public static function getInstance() {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -38,14 +31,11 @@ class Database {
         return self::$instance;
     }
     
-    // Get PDO connection
     public function getConnection() {
         return $this->pdo;
     }
     
-    // Prevent cloning
     private function __clone() {}
     
-    // Prevent unserializing
     public function __wakeup() {}
 }

@@ -1,4 +1,3 @@
-<!-- Register Page -->
 <div class="auth-container">
     <div class="auth-card">
         <div class="auth-header">
@@ -6,7 +5,6 @@
             <p>Stvorite svoj račun za pristup videoteci</p>
         </div>
         
-        <!-- Show errors if any -->
         <?php if (!empty($errors)): ?>
             <div class="alert alert-error">
                 <ul>
@@ -78,6 +76,12 @@
                 </div>
             </div>
             
+            <div class="form-group recaptcha-group">
+                <label>Sigurnosna provjera *</label>
+                <?php echo $recaptcha_widget; ?>
+                <small class="form-help">Potvrdite da niste robot</small>
+            </div>
+            
             <button type="submit" class="btn btn-primary btn-full">
                 Registriraj se
             </button>
@@ -89,4 +93,7 @@
     </div>
 </div>
 
+<link rel="stylesheet" href="css/ajaxUsername.css">
+<?php echo $recaptcha_script; ?>
+<script src="js/ajaxUsername.js"></script>
 <script src="js/register.js"></script>

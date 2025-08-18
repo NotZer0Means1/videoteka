@@ -1,0 +1,30 @@
+
+.username-status {
+    margin-top: 8px;
+    font-size: 14px;
+    min-height: 20px;
+    font-weight: 500;
+}
+
+.username-status span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.username-status .checking {
+    animation: pulse 1.5s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .username-status {
+        font-size: 13px;
+    }
+}

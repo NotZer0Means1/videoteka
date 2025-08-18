@@ -19,10 +19,6 @@
             </div>
         </div>
         
-        <div class="hero-buttons">
-            <a href="register.php" class="btn btn-primary btn-large">Registriraj se besplatno</a>
-            <a href="movies.php" class="btn btn-outline btn-large">Pregledaj filmove</a>
-        </div>
     </div>
 </section>
 

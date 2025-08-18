@@ -1,22 +1,14 @@
 <?php
-/**
- * Database Initialization Script
- * Run this file once to set up the database
- * Contains schema and seed data in one file
- */
 
-// Database config
 $host = 'localhost';
 $user = 'root';
 $pass = '';
 $dbname = 'videoteka';
 
 try {
-    // Connect to MySQL
     $pdo = new PDO("mysql:host=$host", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Create database and tables
     $schema = "
         CREATE DATABASE IF NOT EXISTS videoteka;
         USE videoteka;
@@ -86,7 +78,6 @@ try {
         );
     ";
     
-    // Execute schema
     $statements = explode(';', $schema);
     foreach ($statements as $statement) {
         $statement = trim($statement);
@@ -95,25 +86,19 @@ try {
         }
     }
     
-    // Use the database
     $pdo->exec("USE $dbname");
     
-    // Insert sample data
     $seedData = [
-        // Insert genres
         "INSERT IGNORE INTO genres (name) VALUES 
          ('Action'), ('Comedy'), ('Drama'), ('Horror'), ('Romance'), 
          ('Sci-Fi'), ('Thriller'), ('Animation'), ('Crime'), ('Adventure')",
         
-        // Insert admin user (password: admin123)
         "INSERT IGNORE INTO users (username, email, password, first_name, last_name, role) VALUES 
          ('admin', 'admin@videoteka.com', 'admin123', 'Admin', 'User', 'admin')",
         
-        // Insert test user (password: user123)  
         "INSERT IGNORE INTO users (username, email, password, first_name, last_name, role) VALUES 
          ('testuser', 'user@test.com', 'user123', 'Test', 'User', 'user')",
         
-        // Insert sample movies
         "INSERT IGNORE INTO movies (title, year, director, actors, plot, rating, genre_id) VALUES 
          ('The Matrix', 1999, 'Wachowski Sisters', 'Keanu Reeves, Laurence Fishburne', 'A computer hacker learns reality is a simulation', 8.7, 6)",
         
@@ -144,11 +129,9 @@ try {
         "INSERT IGNORE INTO movies (title, year, director, actors, plot, rating, genre_id) VALUES 
          ('Jaws', 1975, 'Steven Spielberg', 'Roy Scheider', 'Shark terrorizes beach town', 8.0, 7)",
         
-        // Insert sample contact message
         "INSERT IGNORE INTO contact_messages (name, email, subject, message) VALUES 
          ('Marko Marić', 'marko@example.com', 'Upit o filmovima', 'Pozdrav, zanima me kada će biti dostupan novi film Avengers. Hvala!')",
         
-        // Insert sample activity logs
         "INSERT IGNORE INTO activity_logs (user_id, action, description) VALUES 
          (1, 'login', 'Administrator login')",
         
@@ -156,7 +139,6 @@ try {
          (2, 'register', 'New user registration')"
     ];
     
-    // Execute each insert statement
     foreach ($seedData as $sql) {
         $pdo->exec($sql);
     }

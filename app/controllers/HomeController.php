@@ -1,13 +1,8 @@
 <?php
-/**
- * Home Controller
- * Handles homepage requests
- */
 
 class HomeController {
     
     public function index() {
-        // Get sample data (later from database)
         $featuredMovies = [
             [
                 'id' => 1,
@@ -63,7 +58,6 @@ class HomeController {
             ]
         ];
         
-        // Prepare data for view
         $data = [
             'pageTitle' => 'Početna',
             'featuredMovies' => $featuredMovies,
@@ -71,22 +65,13 @@ class HomeController {
             'features' => $features
         ];
         
-        // Load view
         $this->view('home/index', $data);
     }
     
-    // Helper method to load views
     private function view($view, $data = []) {
-        // Extract data to variables
         extract($data);
-        
-        // Load header
         require_once __DIR__ . '/../views/templates/header.tpl.php';
-        
-        // Load main content
         require_once __DIR__ . '/../views/' . $view . '.php';
-        
-        // Load footer
         require_once __DIR__ . '/../views/templates/footer.tpl.php';
     }
 }

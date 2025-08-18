@@ -1,5 +1,4 @@
 <?php
-// Check if user is logged in
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -14,9 +13,9 @@ $currentUser = $isLoggedIn ? $_SESSION : null;
     <title><?php echo isset($pageTitle) ? $pageTitle . ' - Videoteka' : 'Videoteka'; ?></title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/recaptcha.css">
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="container">
             <nav class="nav">

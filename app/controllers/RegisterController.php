@@ -1,23 +1,22 @@
 <?php
-/**
- * Register Controller
- * Handles user registration only
- */
 
 require_once __DIR__ . '/../../config/Database.php';
+require_once __DIR__ . '/../../config/Config.php';
+require_once __DIR__ . '/../helpers/RecaptchaHelper.php';
 
 class RegisterController {
     private $db;
+    private $recaptcha;
     
     public function __construct() {
         $this->db = Database::getInstance()->getConnection();
+        $this->recaptcha = new Recaptcha(Config::RECAPTCHA_SITE_KEY, Config::RECAPTCHA_SECRET_KEY);
     }
     
     public function index() {
         $errors = [];
         $data = [];
         
-        // If form is submitted
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = trim($_POST['username'] ?? '');
             $email = trim($_POST['email'] ?? '');
@@ -25,8 +24,14 @@ class RegisterController {
             $confirm_password = $_POST['confirm_password'] ?? '';
             $first_name = trim($_POST['first_name'] ?? '');
             $last_name = trim($_POST['last_name'] ?? '');
+            $recaptcha_response = $_POST['g-recaptcha-response'] ?? '';
             
-            // Validation
+            if (empty($recaptcha_response)) {
+                $errors[] = 'Molimo potvrdite da niste robot.';
+            } elseif (!$this->recaptcha->verify($recaptcha_response)) {
+                $errors[] = 'reCAPTCHA provjera nije uspjela. Pokušajte ponovno.';
+            }
+            
             if (empty($username)) {
                 $errors[] = 'Korisničko ime je obavezno.';
             } elseif (strlen($username) < 3) {
@@ -57,7 +62,6 @@ class RegisterController {
                 $errors[] = 'Prezime je obavezno.';
             }
             
-            // Check if username exists
             if (empty($errors)) {
                 $stmt = $this->db->prepare("SELECT id FROM users WHERE username = ?");
                 $stmt->execute([$username]);
@@ -66,7 +70,6 @@ class RegisterController {
                 }
             }
             
-            // Check if email exists
             if (empty($errors)) {
                 $stmt = $this->db->prepare("SELECT id FROM users WHERE email = ?");
                 $stmt->execute([$email]);
@@ -75,7 +78,6 @@ class RegisterController {
                 }
             }
             
-            // If no errors, create user
             if (empty($errors)) {
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                 
@@ -85,11 +87,9 @@ class RegisterController {
                 ");
                 
                 if ($stmt->execute([$username, $email, $hashed_password, $first_name, $last_name])) {
-                    // Log activity
                     $user_id = $this->db->lastInsertId();
-                    $this->logActivity($user_id, 'register', 'User registered');
+                    $this->logActivity($user_id, 'register', 'User registered successfully');
                     
-                    // Redirect to login with success message
                     header('Location: ?page=login&registered=1');
                     exit();
                 } else {
@@ -97,7 +97,6 @@ class RegisterController {
                 }
             }
             
-            // Keep form data for re-display
             $data = [
                 'username' => $username,
                 'email' => $email,
@@ -106,17 +105,17 @@ class RegisterController {
             ];
         }
         
-        // Prepare data for view
         $viewData = [
             'pageTitle' => 'Registracija',
             'errors' => $errors,
-            'data' => $data
+            'data' => $data,
+            'recaptcha_widget' => $this->recaptcha->getWidget(),
+            'recaptcha_script' => $this->recaptcha->getScript()
         ];
         
         $this->view('auth/register', $viewData);
     }
     
-    // Log user activity
     private function logActivity($user_id, $action, $description) {
         $stmt = $this->db->prepare("
             INSERT INTO activity_logs (user_id, action, description) 
@@ -125,7 +124,6 @@ class RegisterController {
         $stmt->execute([$user_id, $action, $description]);
     }
     
-    // Load view
     private function view($view, $data = []) {
         extract($data);
         

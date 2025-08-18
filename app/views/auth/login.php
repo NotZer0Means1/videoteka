@@ -1,4 +1,3 @@
-<!-- Login Page -->
 <div class="auth-container">
     <div class="auth-card">
         <div class="auth-header">
@@ -6,14 +5,21 @@
             <p>Prijavite se u svoj račun</p>
         </div>
         
-        <!-- Show registration success message -->
         <?php if (isset($registered) && $registered): ?>
             <div class="alert alert-success">
                 Registracija uspješna! Možete se prijaviti sa svojim podacima.
             </div>
         <?php endif; ?>
         
-        <!-- Show errors if any -->
+        <?php if ($failedAttempts > 0): ?>
+            <div class="alert alert-warning">
+                <strong>Upozorenje:</strong> <?php echo $failedAttempts; ?> neuspješnih pokušaja prijave.
+                <?php if ($showCaptcha): ?>
+                    Molimo potvrdite da niste robot.
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+        
         <?php if (!empty($errors)): ?>
             <div class="alert alert-error">
                 <ul>
@@ -42,6 +48,14 @@
                        required>
             </div>
             
+            <?php if ($showCaptcha): ?>
+                <div class="form-group recaptcha-group">
+                    <label>Sigurnosna provjera *</label>
+                    <?php echo $recaptcha_widget; ?>
+                    <small class="form-help">Potrebno nakon neuspješnih pokušaja</small>
+                </div>
+            <?php endif; ?>
+            
             <button type="submit" class="btn btn-primary btn-full">
                 Prijavite se
             </button>
@@ -52,7 +66,6 @@
             <p><a href="?page=home">← Povratak na početnu</a></p>
         </div>
         
-        <!-- Demo accounts info -->
         <div class="demo-info">
             <h4>Demo računi za testiranje:</h4>
             <p><strong>Admin:</strong> admin / admin123</p>
@@ -60,5 +73,9 @@
         </div>
     </div>
 </div>
+
+<?php if ($showCaptcha): ?>
+    <?php echo $recaptcha_script; ?>
+<?php endif; ?>
 
 <script src="js/login.js"></script>

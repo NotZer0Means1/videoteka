@@ -1,0 +1,87 @@
+/* reCAPTCHA Styles */
+
+.recaptcha-group {
+    margin: 25px 0;
+    text-align: center;
+}
+
+.recaptcha-group label {
+    display: block;
+    color: #e0e0e0;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.g-recaptcha {
+    display: inline-block;
+    margin: 10px 0;
+}
+
+/* Dark theme styling to match videoteka design */
+.g-recaptcha > div {
+    border-radius: 5px;
+}
+
+/* Responsive reCAPTCHA */
+@media (max-width: 480px) {
+    .g-recaptcha {
+        transform: scale(0.85);
+        transform-origin: center;
+    }
+    
+    .recaptcha-group {
+        overflow-x: auto;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .g-recaptcha {
+        transform: scale(0.75);
+    }
+}
+
+/* Warning alert style */
+.alert-warning {
+    background-color: #4a3a1a;
+    border: 1px solid #ff8800;
+    color: #ffaa88;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Loading state for forms with reCAPTCHA */
+.btn-loading {
+    opacity: 0.7;
+    cursor: not-allowed;
+    position: relative;
+}
+
+.btn-loading::after {
+    content: '';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+/* reCAPTCHA container improvements */
+.recaptcha-group .form-help {
+    color: #b0b0b0;
+    font-size: 14px;
+    margin-top: 8px;
+    font-style: italic;
+}

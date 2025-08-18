@@ -1,24 +1,18 @@
-// Videoteka - Main JavaScript
-
-// Show cookie banner if not accepted
 document.addEventListener('DOMContentLoaded', function() {
     if (!localStorage.getItem('cookiesAccepted')) {
         document.getElementById('cookieBanner').style.display = 'block';
     }
 });
 
-// Accept cookies
 function acceptCookies() {
     localStorage.setItem('cookiesAccepted', 'true');
     document.getElementById('cookieBanner').style.display = 'none';
 }
 
-// Decline cookies
 function declineCookies() {
     document.getElementById('cookieBanner').style.display = 'none';
 }
 
-// Search functionality
 document.addEventListener('DOMContentLoaded', function() {
     const searchForm = document.querySelector('.search-box');
     const searchInput = document.querySelector('.search-input');
@@ -34,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Movie card hover effects
 document.addEventListener('DOMContentLoaded', function() {
     const movieCards = document.querySelectorAll('.movie-card');
     
@@ -49,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Smooth scrolling for anchor links
 document.addEventListener('DOMContentLoaded', function() {
     const links = document.querySelectorAll('a[href^="#"]');
     
@@ -69,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Form validation helper
 function validateForm(form) {
     const inputs = form.querySelectorAll('input[required]');
     let isValid = true;
@@ -86,14 +77,12 @@ function validateForm(form) {
     return isValid;
 }
 
-// Show loading state for buttons
 function showLoading(button, text = 'Učitavanje...') {
     button.disabled = true;
     button.innerHTML = text;
     button.style.opacity = '0.7';
 }
 
-// Hide loading state for buttons
 function hideLoading(button, originalText) {
     button.disabled = false;
     button.innerHTML = originalText;
