@@ -30,7 +30,7 @@ switch ($page) {
         $controller->logout();
         break;
         
-    case 'check_username':
+    case 'ajax':
         require_once '../app/controllers/AjaxUsernameController.php';
         $controller = new AjaxUsernameController();
         $controller->check();
@@ -44,14 +44,14 @@ switch ($page) {
             case 'show':
                 $controller->show($_GET['id'] ?? null);
                 break;
-            case 'add':
-                $controller->add();
+            case 'search_omdb':
+                $controller->searchOMDB();
+                break;
+            case 'add_from_omdb':
+                $controller->addFromOMDB();
                 break;
             case 'delete':
                 $controller->delete($_GET['id'] ?? null);
-                break;
-            case 'ajax_search':
-                $controller->ajaxSearch();
                 break;
             default:
                 $controller->index();
@@ -110,6 +110,29 @@ switch ($page) {
                 $controller->index();
                 break;
         }
+        break;
+        
+    case 'contact':
+        require_once '../app/controllers/ContactController.php';
+        $controller = new ContactController();
+        $controller->index();
+        break;
+        
+    case 'profile':
+        require_once '../app/controllers/ProfileController.php';
+        $controller = new ProfileController();
+        $controller->index();
+        break;
+        
+    case 'rss':
+        require_once '../app/controllers/RssController.php';
+        $controller = new RssController();
+        $controller->index();
+        break;
+        
+    case '404':
+        http_response_code(404);
+        require_once '../app/views/errors/404.php';
         break;
 }
 ?>

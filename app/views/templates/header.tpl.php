@@ -1,8 +1,10 @@
 <?php
+// Check if user is logged in
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 $isLoggedIn = isset($_SESSION['user_id']);
+$isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
 $currentUser = $isLoggedIn ? $_SESSION : null;
 ?>
 <!DOCTYPE html>
@@ -14,8 +16,12 @@ $currentUser = $isLoggedIn ? $_SESSION : null;
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/auth.css">
     <link rel="stylesheet" href="css/recaptcha.css">
+    <link rel="stylesheet" href="css/movies/movies_main.css">
+    <link rel="stylesheet" href="css/movies/movies_show.css">
+    <link rel="stylesheet" href="css/movies/movies_search.css">
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
         <div class="container">
             <nav class="nav">
@@ -23,6 +29,10 @@ $currentUser = $isLoggedIn ? $_SESSION : null;
                 <div class="menu">
                     <a href="?page=home">Početna</a>
                     <a href="?page=movies">Filmovi</a>
+                    <?php if ($isAdmin): ?>
+                        <a href="?page=movies&action=search_omdb">Dodaj film</a>
+                        <a href="?page=admin">Admin</a>
+                    <?php endif; ?>
                     <a href="?page=contact">Kontakt</a>
                 </div>
                 <div class="auth-buttons">

@@ -1,44 +1,22 @@
 <?php
+/**
+ * Home Controller with Real Database Data
+ */
+
+require_once __DIR__ . '/../../config/Database.php';
 
 class HomeController {
+    private $db;
+    
+    public function __construct() {
+        $this->db = Database::getInstance()->getConnection();
+    }
     
     public function index() {
-        $featuredMovies = [
-            [
-                'id' => 1,
-                'title' => 'The Matrix',
-                'year' => 1999,
-                'rating' => 8.7,
-                'icon' => '🎭'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Pulp Fiction',
-                'year' => 1994,
-                'rating' => 8.9,
-                'icon' => '🎬'
-            ],
-            [
-                'id' => 3,
-                'title' => 'The Dark Knight',
-                'year' => 2008,
-                'rating' => 9.0,
-                'icon' => '🎪'
-            ],
-            [
-                'id' => 4,
-                'title' => 'Inception',
-                'year' => 2010,
-                'rating' => 8.8,
-                'icon' => '🎯'
-            ]
-        ];
+
+        $featuredMovies = $this->getFeaturedMovies();
         
-        $stats = [
-            'total_movies' => 1000,
-            'total_users' => 500,
-            'availability' => '24/7'
-        ];
+        $stats = $this->getSystemStats();
         
         $features = [
             [
@@ -66,6 +44,118 @@ class HomeController {
         ];
         
         $this->view('home/index', $data);
+    }
+    
+
+    private function getFeaturedMovies() {
+        try {
+            $stmt = $this->db->query("
+                SELECT m.*, g.name as genre_name 
+                FROM movies m 
+                LEFT JOIN genres g ON m.genre_id = g.id 
+                ORDER BY 
+                    CASE 
+                        WHEN m.rating IS NOT NULL THEN m.rating 
+                        ELSE 0 
+                    END DESC,
+                    m.year DESC
+                LIMIT 8
+            ");
+            
+            $movies = $stmt->fetchAll();
+            
+            if (empty($movies)) {
+                return [];
+            }
+            
+            $featuredMovies = [];
+            foreach ($movies as $movie) {
+                $featuredMovies[] = [
+                    'id' => $movie['id'],
+                    'title' => $movie['title'],
+                    'year' => $movie['year'],
+                    'rating' => $movie['rating'] ? number_format($movie['rating'], 1) : null,
+                    'poster_url' => $movie['poster_url'],
+                    'director' => $movie['director'],
+                    'genre_name' => $movie['genre_name'],
+                    'is_available' => $movie['is_available'],
+                    'icon' => $this->getMovieIcon($movie['genre_name'])];
+            }
+        
+            
+            return $featuredMovies;
+            
+        } catch (Exception $e) {
+            error_log("Error fetching featured movies: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    private function getSystemStats() {
+        try {
+            $stmt = $this->db->query("SELECT COUNT(*) as count FROM movies");
+            $totalMovies = $stmt->fetch()['count'] ?? 0;
+            
+            $stmt = $this->db->query("SELECT COUNT(*) as count FROM users WHERE role = 'user'");
+            $totalUsers = $stmt->fetch()['count'] ?? 0;
+            
+            $stmt = $this->db->query("
+                SELECT 
+                    COUNT(*) as total,
+                    SUM(CASE WHEN is_available = 1 THEN 1 ELSE 0 END) as available
+                FROM movies
+            ");
+            $movieStats = $stmt->fetch();
+            
+            $availabilityPercentage = $movieStats['total'] > 0 
+                ? round(($movieStats['available'] / $movieStats['total']) * 100) 
+                : 100;
+            
+            return [
+                'total_movies' => $totalMovies,
+                'total_users' => $totalUsers,
+                'availability' => $availabilityPercentage . '%'
+            ];
+            
+        } catch (Exception $e) {
+            error_log("Error fetching system stats: " . $e->getMessage());
+            return [
+                'total_movies' => '0',
+                'total_users' => '0',
+                'availability' => '100%'
+            ];
+        }
+    }
+    
+    private function getMovieIcon($genre) {
+        $genreIcons = [
+            'Action' => '💥',
+            'Comedy' => '😂',
+            'Drama' => '🎭',
+            'Horror' => '👻',
+            'Romance' => '💕',
+            'Sci-Fi' => '🚀',
+            'Thriller' => '😱',
+            'Animation' => '🎨',
+            'Crime' => '🔫',
+            'Adventure' => '🗺️',
+            'Fantasy' => '🧙',
+            'Mystery' => '🔍',
+            'War' => '⚔️',
+            'Western' => '🤠',
+            'Musical' => '🎵',
+            'Biography' => '📖',
+            'History' => '🏛️',
+            'Sport' => '⚽',
+            'Family' => '👨‍👩‍👧‍👦'
+        ];
+
+        foreach ($genreIcons as $genreName => $icon) {
+            if (stripos($genre, $genreName) !== false) {
+                return $icon;
+            }
+        }
+        return '🎬';
     }
     
     private function view($view, $data = []) {

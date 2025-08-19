@@ -9,6 +9,9 @@ class Config {
     
     const RECAPTCHA_SITE_KEY = '6LcljaorAAAAAHPjqbNTT0t4YiESbhnNwcOFWIaS';
     const RECAPTCHA_SECRET_KEY = '6LcljaorAAAAAPS-qsgxdbJ88Tk42QE5Jg08XOMa';
+
+    const OMDB_API_KEY = 'cf074589';
+    const OMDB_BASE_URL = 'http://www.omdbapi.com/';
     
     const SITE_NAME = 'Videoteka';
     const SITE_URL = 'http://localhost/videoteka';
