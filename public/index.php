@@ -30,7 +30,7 @@ switch ($page) {
         $controller->logout();
         break;
         
-    case 'ajax':
+    case 'check_username':
         require_once '../app/controllers/AjaxUsernameController.php';
         $controller = new AjaxUsernameController();
         $controller->check();
