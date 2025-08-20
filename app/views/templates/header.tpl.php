@@ -29,6 +29,9 @@ $currentUser = $isLoggedIn ? $_SESSION : null;
                 <div class="menu">
                     <a href="?page=home">Početna</a>
                     <a href="?page=movies">Filmovi</a>
+                    <?php if ($isLoggedIn): ?>
+                        <a href="?page=rentals">Moja iznajmljivanja</a>
+                    <?php endif; ?>
                     <?php if ($isAdmin): ?>
                         <a href="?page=movies&action=search_omdb">Dodaj film</a>
                         <a href="?page=admin">Admin</a>
