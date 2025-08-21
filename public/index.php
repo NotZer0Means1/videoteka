@@ -112,9 +112,9 @@ switch ($page) {
         }
         break;
         
-    case 'contact':
-        require_once '../app/controllers/ContactController.php';
-        $controller = new ContactController();
+    case 'docs':
+        require_once '../app/controllers/DocumentationController.php';
+        $controller = new DocumentationController();
         $controller->index();
         break;
         

@@ -28,6 +28,7 @@ $currentUser = $isLoggedIn ? $_SESSION : null;
     <link rel="stylesheet" href="css/movies/omdb.css">
     <link rel="stylesheet" href="css/rentals/rentals.css">
     <link rel="stylesheet" href="css/ajax/ajaxUsername.css">
+    <link rel="stylesheet" href="css/docs/docs.css">
 </head>
 <body>
 <!-- Header -->
@@ -45,7 +46,7 @@ $currentUser = $isLoggedIn ? $_SESSION : null;
                     <a href="?page=movies&action=search_omdb">Dodaj film</a>
                     <a href="?page=admin">Admin</a>
                 <?php endif; ?>
-                <a href="?page=contact">Kontakt</a>
+                <a href="?page=docs">Dokumentacija</a>
             </div>
             <div class="auth-buttons">
                 <?php if ($isLoggedIn): ?>
