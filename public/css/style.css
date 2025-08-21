@@ -1,4 +1,4 @@
-/* Videoteka - Упрощенный CSS */
+/* Videoteka - Main CSS with Sticky Footer */
 
 * {
     margin: 0;
@@ -6,11 +6,23 @@
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
     background-color: #121212;
     color: #e0e0e0;
     font-family: Arial, sans-serif;
     line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Main content wrapper - this pushes footer to bottom */
+main {
+    flex: 1;
 }
 
 .container {
@@ -413,12 +425,12 @@ body {
     margin-bottom: 5px;
 }
 
-/* Footer */
+/* Footer - Sticky at bottom */
 .footer {
     background-color: #0a0a0a;
     padding: 40px 0;
     border-top: 2px solid #00bcd4;
-    margin-top: bottom;
+    margin-top: auto; /* This is what makes it stick to bottom */
 }
 
 .footer-content {

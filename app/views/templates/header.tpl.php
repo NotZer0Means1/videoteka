@@ -25,8 +25,9 @@ $currentUser = $isLoggedIn ? $_SESSION : null;
     <link rel="stylesheet" href="css/movies/main.css">
     <link rel="stylesheet" href="css/movies/show.css">
     <link rel="stylesheet" href="css/movies/search.css">
+    <link rel="stylesheet" href="css/movies/omdb.css">
     <link rel="stylesheet" href="css/rentals/rentals.css">
-
+    <link rel="stylesheet" href="css/ajax/ajaxUsername.css">
 </head>
 <body>
 <!-- Header -->
@@ -58,3 +59,5 @@ $currentUser = $isLoggedIn ? $_SESSION : null;
         </nav>
     </div>
 </header>
+
+<main>

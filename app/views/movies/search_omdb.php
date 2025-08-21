@@ -21,6 +21,7 @@
                 </button>
             </div>
         </form>
+    </div>
     
     <?php if (!empty($searchResults)): ?>
         <div class="search-results">
@@ -77,93 +78,3 @@
         </div>
     <?php endif; ?>
 </div>
-
-<style>
-.page-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.page-header h1 {
-    color: #00bcd4;
-    margin-bottom: 10px;
-}
-
-.search-section {
-    background-color: #1a1a1a;
-    padding: 30px;
-    border-radius: 10px;
-    margin-bottom: 30px;
-    border: 1px solid #333;
-}
-
-.search-input-group {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.search-input-group input {
-    flex: 1;
-    padding: 12px 20px;
-    background-color: #2a2a2a;
-    border: 2px solid #444;
-    border-radius: 5px;
-    color: #e0e0e0;
-    font-size: 16px;
-
-
-.poster-fallback {
-    font-size: 48px;
-    color: #00bcd4;
-}
-
-.movie-info {
-    padding: 20px;
-}
-
-.movie-title {
-    color: #fff;
-    font-size: 16px;
-    margin-bottom: 8px;
-}
-
-.movie-year {
-    color: #b0b0b0;
-    margin-bottom: 15px;
-}
-
-.movie-actions {
-    text-align: center;
-}
-
-.search-instructions {
-    background-color: #1a1a1a;
-    padding: 30px;
-    border-radius: 10px;
-    border: 1px solid #333;
-}
-
-.search-instructions h3 {
-    color: #00bcd4;
-    margin-bottom: 20px;
-}
-
-.search-instructions ol {
-    color: #e0e0e0;
-    line-height: 1.6;
-}
-
-.no-results {
-    text-align: center;
-    padding: 40px;
-    background-color: #1a1a1a;
-    border-radius: 10px;
-    border: 1px solid #333;
-}
-
-.no-results h3 {
-    color: #00bcd4;
-    margin-bottom: 15px;
-}
-</style>
