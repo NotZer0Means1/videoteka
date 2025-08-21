@@ -1,4 +1,4 @@
-<!-- Simple Admin Dashboard -->
+<!-- Simple Admin Dashboard with Backup Button -->
 <div class="container">
     <h1>Admin Dashboard</h1>
     
@@ -23,5 +23,14 @@
             <h3><?php echo $stats['today_logins']; ?></h3>
             <p>Danas prijava</p>
         </div>
+    </div>
+    <div class="backup-section">
+        <h2>Sigurnosna kopija podataka</h2>
+        <form method="POST" onsubmit="return confirmBackup();">
+            <input type="hidden" name="create_backup" value="1">
+            <button type="submit" class="btn btn-primary btn-large backup-btn">
+                Stvori sigurnosnu kopiju
+            </button>
+        </form>
     </div>
 </div>

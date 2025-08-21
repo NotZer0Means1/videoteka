@@ -183,16 +183,16 @@ class RentalController {
         $status = $_GET['status'] ?? '';
         $search = $_GET['search'] ?? '';
         
-        $whereClause = "WHERE 1=1";
+        $where = "WHERE 1=1";
         $params = [];
         
         if ($status) {
-            $whereClause .= " AND r.status = ?";
+            $where .= " AND r.status = ?";
             $params[] = $status;
         }
         
         if ($search) {
-            $whereClause .= " AND (m.title LIKE ? OR u.username LIKE ? OR u.first_name LIKE ? OR u.last_name LIKE ?)";
+            $where .= " AND (m.title LIKE ? OR u.username LIKE ? OR u.first_name LIKE ? OR u.last_name LIKE ?)";
             $searchTerm = "%$search%";
             $params = array_merge($params, [$searchTerm, $searchTerm, $searchTerm, $searchTerm]);
         }
@@ -202,8 +202,8 @@ class RentalController {
                 FROM rentals r 
                 JOIN movies m ON r.movie_id = m.id 
                 JOIN users u ON r.user_id = u.id 
-                $whereClause
-                ORDER BY r.rental_date DESC 
+                $where
+                ORDER BY r.rental_date DESC
                 LIMIT 100";
         
         $stmt = $this->db->prepare($sql);

@@ -20,17 +20,17 @@ class MovieController {
         $perPage = 12;
         $offset = ($page - 1) * $perPage;
         
-        $whereClause = "WHERE 1=1";
+        $where = "WHERE 1=1";
         $params = [];
         
         if ($search) {
-            $whereClause .= " AND (m.title LIKE ? OR m.director LIKE ? OR m.actors LIKE ?)";
+            $where .= " AND (m.title LIKE ? OR m.director LIKE ? OR m.actors LIKE ?)";
             $searchTerm = "%$search%";
             $params = [$searchTerm, $searchTerm, $searchTerm];
         }
         
         if ($genre) {
-            $whereClause .= " AND g.id = ?";
+            $where .= " AND g.id = ?";
             $params[] = $genre;
         }
         
@@ -44,7 +44,7 @@ class MovieController {
         $sql = "SELECT m.*, g.name as genre_name 
                 FROM movies m 
                 LEFT JOIN genres g ON m.genre_id = g.id 
-                $whereClause 
+                $where 
                 $orderClause 
                 LIMIT ? OFFSET ?";
         
@@ -55,7 +55,7 @@ class MovieController {
         $stmt->execute($params);
         $movies = $stmt->fetchAll();
         
-        $countSql = "SELECT COUNT(*) FROM movies m LEFT JOIN genres g ON m.genre_id = g.id $whereClause";
+        $countSql = "SELECT COUNT(*) FROM movies m LEFT JOIN genres g ON m.genre_id = g.id $where";
         $countParams = array_slice($params, 0, -2);
         $countStmt = $this->db->prepare($countSql);
         $countStmt->execute($countParams);

@@ -18,29 +18,10 @@ class HomeController {
         
         $stats = $this->getSystemStats();
         
-        $features = [
-            [
-                'icon' => '📱',
-                'title' => 'Jednostavno korištenje',
-                'description' => 'Intuitivno sučelje za brzo pronalaženje i iznajmljivanje filmova'
-            ],
-            [
-                'icon' => '🚀',
-                'title' => 'Brza dostava',
-                'description' => 'Filmovi dostupni odmah nakon iznajmljivanja'
-            ],
-            [
-                'icon' => '💎',
-                'title' => 'Kvaliteta',
-                'description' => 'Samo najbolji filmovi u HD kvaliteti'
-            ]
-        ];
-        
         $data = [
             'pageTitle' => 'Početna',
             'featuredMovies' => $featuredMovies,
             'stats' => $stats,
-            'features' => $features
         ];
         
         $this->view('home/index', $data);
@@ -78,8 +59,7 @@ class HomeController {
                     'poster_url' => $movie['poster_url'],
                     'director' => $movie['director'],
                     'genre_name' => $movie['genre_name'],
-                    'is_available' => $movie['is_available'],
-                    'icon' => $this->getMovieIcon($movie['genre_name'])];
+                    'is_available' => $movie['is_available']];
             }
         
             
@@ -126,38 +106,7 @@ class HomeController {
             ];
         }
     }
-    
-    private function getMovieIcon($genre) {
-        $genreIcons = [
-            'Action' => '💥',
-            'Comedy' => '😂',
-            'Drama' => '🎭',
-            'Horror' => '👻',
-            'Romance' => '💕',
-            'Sci-Fi' => '🚀',
-            'Thriller' => '😱',
-            'Animation' => '🎨',
-            'Crime' => '🔫',
-            'Adventure' => '🗺️',
-            'Fantasy' => '🧙',
-            'Mystery' => '🔍',
-            'War' => '⚔️',
-            'Western' => '🤠',
-            'Musical' => '🎵',
-            'Biography' => '📖',
-            'History' => '🏛️',
-            'Sport' => '⚽',
-            'Family' => '👨‍👩‍👧‍👦'
-        ];
 
-        foreach ($genreIcons as $genreName => $icon) {
-            if (stripos($genre, $genreName) !== false) {
-                return $icon;
-            }
-        }
-        return '🎬';
-    }
-    
     private function view($view, $data = []) {
         extract($data);
         require_once __DIR__ . '/../views/templates/header.tpl.php';

@@ -16,10 +16,7 @@ class LoginController {
     public function index() {
         $errors = [];
         $showCaptcha = false;
-        
-        // Get max failed attempts from admin settings JSON
         $maxFailedAttempts = $this->getMaxFailedAttempts();
-        
         $failedAttempts = $_SESSION['failed_attempts'] ?? 0;
         
         if ($failedAttempts >= 2) {
@@ -74,11 +71,9 @@ class LoginController {
                         header('Location: ?page=home');
                         exit();
                     } else {
-                        // Wrong password - increment failed attempts
                         $newFailedCount = $this->incrementFailedAttempts($user['id']);
                         
                         if ($newFailedCount >= $maxFailedAttempts) {
-                            // Deactivate account
                             $this->deactivateAccount($user['id']);
                             $errors[] = "Račun je deaktiviran zbog {$maxFailedAttempts} neuspješnih pokušaja prijave.";
                             $this->logActivity($user['id'], 'account_deactivated', "Account deactivated after {$newFailedCount} failed attempts");
@@ -94,7 +89,6 @@ class LoginController {
                         }
                     }
                 } else {
-                    // User not found
                     $_SESSION['failed_attempts'] = $failedAttempts + 1;
                     $errors[] = 'Neispravno korisničko ime ili lozinka.';
                     

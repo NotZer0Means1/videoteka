@@ -1,7 +1,4 @@
 <?php
-/**
- * Simple Admin Controller - Just meet basic requirements
- */
 
 require_once __DIR__ . '/../../config/Database.php';
 
@@ -16,19 +13,113 @@ class AdminController {
             exit();
         }
     }
-    
+
     public function index() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_backup'])) {
+            $result = $this->createDatabaseBackup();
+            
+            if ($result['success']) {
+                $_SESSION['flash_message'] = $result['message'];
+                $_SESSION['flash_type'] = 'success';
+            } else {
+                $_SESSION['flash_message'] = $result['message'];
+                $_SESSION['flash_type'] = 'error';
+            }
+
+            header('Location: ?page=admin');
+            exit();
+        }
+
         $stats = $this->getBasicStats();
         
         $data = [
             'pageTitle' => 'Admin Dashboard',
             'stats' => $stats
         ];
-        
+
         $this->view('admin/dashboard', $data);
     }
-    
-    // User management - simplified CRUD
+
+    private function createDatabaseBackup() {
+        try {
+            $backupDir = __DIR__ . '/../../backups';
+            if (!is_dir($backupDir)) {
+                mkdir($backupDir, 0755, true);
+            }
+
+            $timestamp = date('Y-m-d_H-i-s');
+            $filename = "videoteka_backup_{$timestamp}.sql";
+            $filepath = $backupDir . '/' . $filename;
+
+            $tables = [];
+            $stmt = $this->db->query("SHOW TABLES");
+            while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+                $tables[] = $row[0];
+            }
+
+            $sqlBackup = "-- Videoteka Database Backup\n";
+            $sqlBackup .= "-- Generated on: " . date('Y-m-d H:i:s') . "\n\n";
+            $sqlBackup .= "SET FOREIGN_KEY_CHECKS = 0;\n\n";
+            
+            foreach ($tables as $table) {
+                $stmt = $this->db->query("SHOW CREATE TABLE `$table`");
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                $sqlBackup .= "DROP TABLE IF EXISTS `$table`;\n";
+                $sqlBackup .= $row['Create Table'] . ";\n\n";
+
+                $stmt = $this->db->query("SELECT * FROM `$table`");
+                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                if (!empty($rows)) {
+                    $columns = array_keys($rows[0]);
+                    $sqlBackup .= "INSERT INTO `$table` (`" . implode('`, `', $columns) . "`) VALUES\n";
+                    
+                    foreach ($rows as $index => $row) {
+                        $values = [];
+                        foreach ($row as $value) {
+                            if ($value === null) {
+                                $values[] = 'NULL';
+                            } else {
+                                $values[] = "'" . addslashes($value) . "'";
+                            }
+                        }
+                        
+                        $sqlBackup .= "(" . implode(', ', $values) . ")";
+                        
+                        if ($index < count($rows) - 1) {
+                            $sqlBackup .= ",\n";
+                        } else {
+                            $sqlBackup .= ";\n\n";
+                        }
+                    }
+                }
+            }
+            
+            $sqlBackup .= "SET FOREIGN_KEY_CHECKS = 1;\n";
+
+            if (file_put_contents($filepath, $sqlBackup)) {
+                $this->logActivity($_SESSION['user_id'], 'create_backup', "Database backup created: $filename");
+                
+                return [
+                    'success' => true,
+                    'message' => "Sigurnosna kopija uspješno stvorena: $filename"
+                ];
+            } else {
+                return [
+                    'success' => false,
+                    'message' => 'Greška pri spremanju sigurnosne kopije.'
+                ];
+            }
+            
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Greška pri stvaranju sigurnosne kopije: ' . $e->getMessage()
+            ];
+        }
+    }
+
     public function users() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $action = $_POST['action'] ?? '';
@@ -67,14 +158,12 @@ class AdminController {
         
         $this->view('admin/users', $data);
     }
-    
-    // System configuration
+
     public function config() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $moviesPerPage = $_POST['movies_per_page'] ?? 12;
             $maxFailedAttempts = $_POST['max_failed_attempts'] ?? 3;
-            
-            // Simple file-based config
+
             $config = [
                 'movies_per_page' => (int)$moviesPerPage,
                 'max_failed_attempts' => (int)$maxFailedAttempts
@@ -86,8 +175,7 @@ class AdminController {
             header('Location: ?page=admin&section=config');
             exit();
         }
-        
-        // Load current settings
+
         $configFile = __DIR__ . '/../../config/admin_settings.json';
         if (file_exists($configFile)) {
             $settings = json_decode(file_get_contents($configFile), true);
@@ -102,22 +190,21 @@ class AdminController {
         
         $this->view('admin/settings', $data);
     }
-    
-    // Activity logs view
+
     public function logs() {
         $search = $_GET['search'] ?? '';
-        $whereClause = '';
+        $whereDesc = '';
         $params = [];
         
         if ($search) {
-            $whereClause = "WHERE description LIKE ?";
+            $whereDesc = "WHERE description LIKE ?";
             $params[] = "%$search%";
         }
         
         $sql = "SELECT al.*, u.username 
                 FROM activity_logs al 
                 LEFT JOIN users u ON al.user_id = u.id 
-                $whereClause
+                $whereDesc
                 ORDER BY al.created_at DESC 
                 LIMIT 50";
         
@@ -133,13 +220,11 @@ class AdminController {
         
         $this->view('admin/logs', $data);
     }
-    
-    // Basic statistics
+
     public function stats() {
         $dateFrom = $_GET['date_from'] ?? date('Y-m-d', strtotime('-7 days'));
         $dateTo = $_GET['date_to'] ?? date('Y-m-d');
-        
-        // Login stats
+
         $stmt = $this->db->prepare("
             SELECT DATE(created_at) as date, COUNT(*) as count 
             FROM activity_logs 
@@ -150,8 +235,7 @@ class AdminController {
         ");
         $stmt->execute([$dateFrom, $dateTo]);
         $loginStats = $stmt->fetchAll();
-        
-        // User registrations
+
         $stmt = $this->db->prepare("
             SELECT DATE(created_at) as date, COUNT(*) as count 
             FROM users 
@@ -172,8 +256,7 @@ class AdminController {
         
         $this->view('admin/stats', $data);
     }
-    
-    // Store new user (simplified)
+
     private function storeUser() {
         $username = trim($_POST['username'] ?? '');
         $email = trim($_POST['email'] ?? '');
@@ -182,8 +265,7 @@ class AdminController {
         $lastName = trim($_POST['last_name'] ?? '');
         $role = $_POST['role'] ?? 'user';
         $status = $_POST['status'] ?? 'active';
-        
-        // Basic validation
+
         if (empty($username) || empty($email) || empty($password) || empty($firstName) || empty($lastName)) {
             $_SESSION['flash_message'] = 'Sva polja su obavezna.';
             $_SESSION['flash_type'] = 'error';
@@ -195,8 +277,7 @@ class AdminController {
             $_SESSION['flash_type'] = 'error';
             return;
         }
-        
-        // Check if username exists
+
         $stmt = $this->db->prepare("SELECT id FROM users WHERE username = ?");
         $stmt->execute([$username]);
         if ($stmt->fetch()) {
@@ -204,8 +285,7 @@ class AdminController {
             $_SESSION['flash_type'] = 'error';
             return;
         }
-        
-        // Check if email exists
+
         $stmt = $this->db->prepare("SELECT id FROM users WHERE email = ?");
         $stmt->execute([$email]);
         if ($stmt->fetch()) {
@@ -213,8 +293,7 @@ class AdminController {
             $_SESSION['flash_type'] = 'error';
             return;
         }
-        
-        // Create user
+
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $this->db->prepare("
             INSERT INTO users (username, email, password, first_name, last_name, role, status) 
@@ -230,8 +309,7 @@ class AdminController {
             $_SESSION['flash_type'] = 'error';
         }
     }
-    
-    // Update user (simplified)
+
     private function updateUser() {
         $userId = $_POST['user_id'] ?? null;
         $username = trim($_POST['username'] ?? '');
@@ -247,15 +325,13 @@ class AdminController {
             $_SESSION['flash_type'] = 'error';
             return;
         }
-        
-        // Basic validation
+
         if (empty($username) || empty($email) || empty($firstName) || empty($lastName)) {
             $_SESSION['flash_message'] = 'Sva polja su obavezna.';
             $_SESSION['flash_type'] = 'error';
             return;
         }
-        
-        // Check if username exists for other users
+
         $stmt = $this->db->prepare("SELECT id FROM users WHERE username = ? AND id != ?");
         $stmt->execute([$username, $userId]);
         if ($stmt->fetch()) {
@@ -263,8 +339,7 @@ class AdminController {
             $_SESSION['flash_type'] = 'error';
             return;
         }
-        
-        // Check if email exists for other users
+
         $stmt = $this->db->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
         $stmt->execute([$email, $userId]);
         if ($stmt->fetch()) {
@@ -272,12 +347,10 @@ class AdminController {
             $_SESSION['flash_type'] = 'error';
             return;
         }
-        
-        // Update user
+
         $sql = "UPDATE users SET username = ?, email = ?, first_name = ?, last_name = ?, role = ?, status = ?";
         $params = [$username, $email, $firstName, $lastName, $role, $status];
-        
-        // Update password if provided
+
         if (!empty($password)) {
             if (strlen($password) < 6) {
                 $_SESSION['flash_message'] = 'Lozinka mora imati najmanje 6 znakova.';
@@ -301,8 +374,7 @@ class AdminController {
             $_SESSION['flash_type'] = 'error';
         }
     }
-    
-    // Delete user (simplified)
+
     private function deleteUser() {
         $userId = $_POST['user_id'] ?? null;
         
@@ -311,15 +383,13 @@ class AdminController {
             $_SESSION['flash_type'] = 'error';
             return;
         }
-        
-        // Don't allow deleting yourself
+
         if ($userId == $_SESSION['user_id']) {
             $_SESSION['flash_message'] = 'Ne možete obrisati svoj račun.';
             $_SESSION['flash_type'] = 'error';
             return;
         }
-        
-        // Get user info before deleting
+
         $stmt = $this->db->prepare("SELECT username FROM users WHERE id = ?");
         $stmt->execute([$userId]);
         $user = $stmt->fetch();
@@ -327,16 +397,13 @@ class AdminController {
         if ($user) {
             try {
                 $this->db->beginTransaction();
-                
-                // Delete user's activity logs
+
                 $stmt = $this->db->prepare("DELETE FROM activity_logs WHERE user_id = ?");
                 $stmt->execute([$userId]);
-                
-                // Delete user's rentals
+
                 $stmt = $this->db->prepare("DELETE FROM rentals WHERE user_id = ?");
                 $stmt->execute([$userId]);
-                
-                // Delete user
+
                 $stmt = $this->db->prepare("DELETE FROM users WHERE id = ?");
                 $stmt->execute([$userId]);
                 

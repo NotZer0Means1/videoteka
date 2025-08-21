@@ -20,9 +20,9 @@
             
             <div class="footer-section">
                 <h3>Kontakt</h3>
-                <p>📍 Split, Hrvatska</p>
-                <p>📞 +385 1 234 5678</p>
-                <p>✉️ info@videoteka.hr</p>
+                <p>Split, Hrvatska</p>
+                <p>+385 1 234 5678</p>
+                <p>info@videoteka.hr</p>
             </div>
         </div>
         
@@ -32,11 +32,10 @@
     </div>
 </footer>
 
-<!-- Cookie Banner -->
 <div class="cookie-modal" id="cookieModal">
     <div class="cookie-modal-content">
         <div class="cookie-form">
-            <h3>🍪 Kolačići</h3>
+            <h3>Kolačići</h3>
             <p>Ova stranica koristi kolačiće za poboljšanje korisničkog iskustva.</p>
             
             <div class="cookie-buttons">

@@ -81,9 +81,9 @@
                             <img src="<?php echo htmlspecialchars($movie['poster_url']); ?>" 
                                  alt="<?php echo htmlspecialchars($movie['title']); ?>"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="poster-fallback" style="display: none;">🎬</div>
+                            <div class="poster-fallback" style="display: none;"></div>
                         <?php else: ?>
-                            <div class="poster-fallback">🎬</div>
+                            <div class="poster-fallback"></div>
                         <?php endif; ?>
                         
                         <div class="movie-overlay">
@@ -132,7 +132,7 @@
                                 <?php if ($movie['is_available']): ?>
                                     <span class="status-available">✓ Dostupno</span>
                                 <?php else: ?>
-                                    <span class="status-rented">⚠ Iznajmljeno</span>
+                                    <span class="status-rented">Iznajmljeno</span>
                                 <?php endif; ?>
                             </div>
                         </div>

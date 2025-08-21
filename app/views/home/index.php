@@ -113,19 +113,3 @@
         <?php endif; ?>
     </div>
 </section>
-
-<!-- Features -->
-<section class="features">
-    <div class="container">
-        <h2 class="section-title">Zašto odabrati nas?</h2>
-        <div class="features-grid">
-            <?php foreach ($features as $feature): ?>
-                <div class="feature-card">
-                    <div class="feature-icon"><?php echo $feature['icon']; ?></div>
-                    <h3 class="feature-title"><?php echo htmlspecialchars($feature['title']); ?></h3>
-                    <p class="feature-desc"><?php echo htmlspecialchars($feature['description']); ?></p>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</section>

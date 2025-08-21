@@ -9,8 +9,7 @@
         <a href="?page=admin&section=stats" class="btn btn-outline">Statistike</a>
         <a href="?page=admin&section=config" class="btn btn-outline">Postavke</a>
     </div>
-    
-    <!-- Simple search -->
+
     <div class="search-form">
         <form method="GET">
             <input type="hidden" name="page" value="admin">
