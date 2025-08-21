@@ -16,38 +16,38 @@ $currentUser = $isLoggedIn ? $_SESSION : null;
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/auth.css">
     <link rel="stylesheet" href="css/recaptcha.css">
+    <link rel="stylesheet" href="css/cookie.css">
     <link rel="stylesheet" href="css/movies/movies_main.css">
     <link rel="stylesheet" href="css/movies/movies_show.css">
     <link rel="stylesheet" href="css/movies/movies_search.css">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <nav class="nav">
-                <div class="logo">🎬 Videoteka</div>
-                <div class="menu">
-                    <a href="?page=home">Početna</a>
-                    <a href="?page=movies">Filmovi</a>
-                    <?php if ($isLoggedIn): ?>
-                        <a href="?page=rentals">Moja iznajmljivanja</a>
-                    <?php endif; ?>
-                    <?php if ($isAdmin): ?>
-                        <a href="?page=movies&action=search_omdb">Dodaj film</a>
-                        <a href="?page=admin">Admin</a>
-                    <?php endif; ?>
-                    <a href="?page=contact">Kontakt</a>
-                </div>
-                <div class="auth-buttons">
-                    <?php if ($isLoggedIn): ?>
-                        <span class="user-welcome">Pozdrav, <?php echo htmlspecialchars($currentUser['first_name']); ?>!</span>
-                        <a href="?page=profile" class="btn btn-outline">Profil</a>
-                        <a href="?page=logout" class="btn btn-primary">Odjava</a>
-                    <?php else: ?>
-                        <a href="?page=login" class="btn btn-outline">Prijava</a>
-                        <a href="?page=register" class="btn btn-primary">Registracija</a>
-                    <?php endif; ?>
-                </div>
-            </nav>
-        </div>
-    </header>
+<!-- Header -->
+<header class="header">
+    <div class="container">
+        <nav class="nav">
+            <div class="logo">🎬 Videoteka</div>
+            <div class="menu">
+                <a href="?page=home">Početna</a>
+                <a href="?page=movies">Filmovi</a>
+                <?php if ($isLoggedIn): ?>
+                    <a href="?page=rentals">Moja iznajmljivanja</a>
+                <?php endif; ?>
+                <?php if ($isAdmin): ?>
+                    <a href="?page=movies&action=search_omdb">Dodaj film</a>
+                    <a href="?page=admin">Admin</a>
+                <?php endif; ?>
+                <a href="?page=contact">Kontakt</a>
+            </div>
+            <div class="auth-buttons">
+                <?php if ($isLoggedIn): ?>
+                    <span class="user-welcome">Pozdrav, <?php echo htmlspecialchars($currentUser['first_name']); ?>!</span>
+                    <a href="?page=logout" class="btn btn-primary">Odjava</a>
+                <?php else: ?>
+                    <a href="?page=login" class="btn btn-outline">Prijava</a>
+                    <a href="?page=register" class="btn btn-primary">Registracija</a>
+                <?php endif; ?>
+            </div>
+        </nav>
+    </div>
+</header>

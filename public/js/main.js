@@ -1,19 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    if (!localStorage.getItem('cookiesAccepted')) {
-        document.getElementById('cookieBanner').style.display = 'block';
-    }
-});
-
-function acceptCookies() {
-    localStorage.setItem('cookiesAccepted', 'true');
-    document.getElementById('cookieBanner').style.display = 'none';
-}
-
-function declineCookies() {
-    document.getElementById('cookieBanner').style.display = 'none';
-}
-
-document.addEventListener('DOMContentLoaded', function() {
     const searchForm = document.querySelector('.search-box');
     const searchInput = document.querySelector('.search-input');
     

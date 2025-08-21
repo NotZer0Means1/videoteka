@@ -1,4 +1,4 @@
-    <footer class="footer">
+<footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -9,9 +9,9 @@
                 <div class="footer-section">
                     <h3>Brze veze</h3>
                     <ul class="footer-links">
-                        <li><a href="index.php">Pocetna</a></li>
-                        <li><a href="movies.php">Filmovi</a></li>
-                        <li><a href="contact.php">Kontakt</a></li>
+                        <li><a href="?page=home">Pocetna</a></li>
+                        <li><a href="?page=movies">Filmovi</a></li>
+                        <li><a href="?page=contact">Kontakt</a></li>
                         <li><a href="about.php">O nama</a></li>
                     </ul>
                 </div>
@@ -25,22 +25,35 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; <?php echo date('Y'); ?> Videoteka.</p>
+                <p>&copy; <?php echo date('Y'); ?> Vladimir Shevalev.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Cookie Banner -->
-    <div class="cookie-banner" id="cookieBanner">
-        <div class="cookie-content">
-            <p>🍪 Ova stranica koristi kolacice za poboljsanje korisnickog iskustva.</p>
-            <div class="cookie-buttons">
-                <button class="btn btn-outline" onclick="declineCookies()">Odbaci</button>
-                <button class="btn btn-primary" onclick="acceptCookies()">Prihvati</button>
+    <!-- Cookie Banner Modal -->
+    <div class="cookie-modal" id="cookieModal">
+        <div class="cookie-modal-content">
+            <div class="cookie-form">
+                <h3>🍪 Kolačići (Cookies)</h3>
+                <p>Ova stranica koristi kolačiće za poboljšanje korisničkog iskustva i funkcionalnosti.</p>
+                
+                <div class="cookie-buttons">
+                    <button class="btn btn-primary" onclick="acceptCookies()">
+                        Prihvaćam sve kolačiće
+                    </button>
+                    <button class="btn btn-outline" onclick="declineCookies()">
+                        Odbacujem
+                    </button>
+                </div>
+                
+                <div class="cookie-footer">
+                    <small>Možete promijeniti postavke kolačića u bilo koje vrijeme u vašem pregledniku.</small>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="public/js/main.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cookie.js"></script>
 </body>
 </html>
