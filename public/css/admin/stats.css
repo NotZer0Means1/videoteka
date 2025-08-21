@@ -1,0 +1,52 @@
+.filter-form {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.filter-form form {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-form label {
+    color: #e0e0e0;
+    font-weight: bold;
+}
+
+.stats-section {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.stats-section h2 {
+    color: #00bcd4;
+    margin-bottom: 15px;
+}
+
+.stats-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.stats-table th,
+.stats-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+.stats-table th {
+    background-color: #2a2a2a;
+    color: #00bcd4;
+    font-weight: bold;
+}
+
+.stats-table td {
+    color: #e0e0e0;
+}

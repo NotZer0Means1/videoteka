@@ -11,5 +11,4 @@ function acceptCookies() {
 
 function declineCookies() {
     document.getElementById('cookieModal').style.display = 'none';
-    localStorage.setItem('cookiesDeclined', 'true');
 }

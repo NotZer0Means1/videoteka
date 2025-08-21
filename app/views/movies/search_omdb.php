@@ -1,4 +1,3 @@
-<!-- OMDB Movie Search Page -->
 <div class="container">
     <div class="page-header">
         <h1>Dodaj film iz OMDB baze</h1>
@@ -6,7 +5,6 @@
         <a href="?page=movies" class="btn btn-outline">← Povratak na filmove</a>
     </div>
     
-    <!-- Search Form -->
     <div class="search-section">
         <form method="GET" class="omdb-search-form">
             <input type="hidden" name="page" value="movies">
@@ -24,7 +22,6 @@
             </div>
         </form>
     
-    <!-- Search Results -->
     <?php if (!empty($searchResults)): ?>
         <div class="search-results">
             <h2>Rezultati pretrage za: "<?php echo htmlspecialchars($searchQuery); ?>"</h2>

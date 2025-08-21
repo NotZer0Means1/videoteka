@@ -1,0 +1,43 @@
+.search-form {
+    margin: 20px 0;
+}
+
+.search-form form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-form input[type="text"] {
+    flex: 1;
+    max-width: 400px;
+}
+
+.logs-table {
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.logs-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.logs-table th,
+.logs-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+.logs-table th {
+    background-color: #2a2a2a;
+    color: #00bcd4;
+    font-weight: bold;
+}
+
+.logs-table td {
+    color: #e0e0e0;
+}

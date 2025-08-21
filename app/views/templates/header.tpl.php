@@ -14,12 +14,19 @@ $currentUser = $isLoggedIn ? $_SESSION : null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($pageTitle) ? $pageTitle . ' - Videoteka' : 'Videoteka'; ?></title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/auth.css">
-    <link rel="stylesheet" href="css/recaptcha.css">
-    <link rel="stylesheet" href="css/cookie.css">
-    <link rel="stylesheet" href="css/movies/movies_main.css">
-    <link rel="stylesheet" href="css/movies/movies_show.css">
-    <link rel="stylesheet" href="css/movies/movies_search.css">
+    <link rel="stylesheet" href="css/auth/auth.css">
+    <link rel="stylesheet" href="css/recaptcha/recaptcha.css">
+    <link rel="stylesheet" href="css/cookie/cookie.css">
+    <link rel="stylesheet" href="css/admin/users.css">
+    <link rel="stylesheet" href="css/admin/stats.css">
+    <link rel="stylesheet" href="css/admin/settings.css">
+    <link rel="stylesheet" href="css/admin/logs.css">
+    <link rel="stylesheet" href="css/admin/dashboard.css">
+    <link rel="stylesheet" href="css/movies/main.css">
+    <link rel="stylesheet" href="css/movies/show.css">
+    <link rel="stylesheet" href="css/movies/search.css">
+    <link rel="stylesheet" href="css/rentals/rentals.css">
+
 </head>
 <body>
 <!-- Header -->

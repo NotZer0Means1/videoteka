@@ -175,7 +175,7 @@
 </div>
 
 <script>
-// Auto-submit form when filters change
+
 document.addEventListener('DOMContentLoaded', function() {
     const genreFilter = document.getElementById('genreFilter');
     const sortFilter = document.getElementById('sortFilter');

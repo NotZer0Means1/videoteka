@@ -25,38 +25,3 @@
         </div>
     </div>
 </div>
-
-<style>
-.admin-nav {
-    display: flex;
-    gap: 10px;
-    margin: 20px 0;
-    flex-wrap: wrap;
-}
-
-.stats-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin: 30px 0;
-}
-
-.stat-card {
-    background-color: #1a1a1a;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    border: 1px solid #333;
-}
-
-.stat-card h3 {
-    font-size: 36px;
-    color: #00bcd4;
-    margin: 0;
-}
-
-.stat-card p {
-    color: #b0b0b0;
-    margin: 10px 0 0 0;
-}
-</style>

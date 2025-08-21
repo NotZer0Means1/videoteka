@@ -40,13 +40,3 @@
         </form>
     </div>
 </div>
-
-<style>
-.settings-form {
-    background-color: #1a1a1a;
-    padding: 30px;
-    border-radius: 10px;
-    max-width: 500px;
-    margin: 20px 0;
-}
-</style>

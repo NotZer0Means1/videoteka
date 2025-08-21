@@ -30,24 +30,20 @@
         </div>
     </footer>
 
-    <!-- Cookie Banner Modal -->
+    <!-- Simple Cookie Banner -->
     <div class="cookie-modal" id="cookieModal">
         <div class="cookie-modal-content">
             <div class="cookie-form">
-                <h3>🍪 Kolačići (Cookies)</h3>
-                <p>Ova stranica koristi kolačiće za poboljšanje korisničkog iskustva i funkcionalnosti.</p>
+                <h3>🍪 Kolačići</h3>
+                <p>Ova stranica koristi kolačiće za poboljšanje korisničkog iskustva.</p>
                 
                 <div class="cookie-buttons">
-                    <button class="btn btn-primary" onclick="acceptCookies()">
-                        Prihvaćam sve kolačiće
-                    </button>
-                    <button class="btn btn-outline" onclick="declineCookies()">
-                        Odbacujem
-                    </button>
+                    <button class="btn btn-primary" onclick="acceptCookies()">Prihvaćam</button>
+                    <button class="btn btn-outline" onclick="declineCookies()">Odbacujem</button>
                 </div>
                 
                 <div class="cookie-footer">
-                    <small>Možete promijeniti postavke kolačića u bilo koje vrijeme u vašem pregledniku.</small>
+                    <small>Možete promijeniti postavke u pregledniku.</small>
                 </div>
             </div>
         </div>
