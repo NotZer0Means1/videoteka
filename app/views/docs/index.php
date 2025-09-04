@@ -191,7 +191,7 @@
                 </ul>
             </div>
             <div class="image-container">
-                <img src="data:image/png;base64,<?php echo base64_encode(file_get_contents("app\views\docs\er_diagram.png")); ?>" alt="ER Diagram">
+                <img src="css/docs/er_diagram.png" alt="ER Diagram">
             </div>
         </div>
     </section>

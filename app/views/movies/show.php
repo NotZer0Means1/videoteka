@@ -53,9 +53,9 @@
                     <span class="meta-label">Status</span>
                     <span class="meta-value">
                         <?php if ($movie['is_available']): ?>
-                            <span class="status-available">✓ Dostupno</span>
+                            <span class="status-available">Dostupno</span>
                         <?php else: ?>
-                            <span class="status-rented">⚠ Iznajmljeno</span>
+                            <span class="status-rented">Iznajmljeno</span>
                         <?php endif; ?>
                     </span>
                 </div>

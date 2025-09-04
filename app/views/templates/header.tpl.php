@@ -35,7 +35,7 @@ $currentUser = $isLoggedIn ? $_SESSION : null;
 <header class="header">
     <div class="container">
         <nav class="nav">
-            <div class="logo">🎬 Videoteka</div>
+            <div class="logo">Videoteka</div>
             <div class="menu">
                 <a href="?page=home">Početna</a>
                 <a href="?page=movies">Filmovi</a>

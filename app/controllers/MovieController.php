@@ -80,6 +80,68 @@ class MovieController {
         $this->view('movies/index', $data);
     }
     
+    public function ajaxSearch() {
+        if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || 
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') {
+            exit('Not allowed');
+        }
+        
+        header('Content-Type: application/json');
+        
+        $search = $_GET['search'] ?? '';
+        $genre = $_GET['genre'] ?? '';
+        $sort = $_GET['sort'] ?? 'title';
+        
+        $where = "WHERE 1=1";
+        $params = [];
+        
+        if ($search) {
+            $where .= " AND (MATCH(m.title, m.director, m.actors) AGAINST (? IN NATURAL LANGUAGE MODE) 
+                        OR m.title LIKE ? OR m.director LIKE ? OR m.actors LIKE ?)";
+            $searchTerm = "%$search%";
+            $params = [$search, $searchTerm, $searchTerm, $searchTerm];
+        }
+        
+        if ($genre && $genre !== 'all') {
+            $where .= " AND g.id = ?";
+            $params[] = $genre;
+        }
+        
+        $orderClause = match($sort) {
+            'year' => 'ORDER BY m.year DESC',
+            'rating' => 'ORDER BY m.rating DESC', 
+            'director' => 'ORDER BY m.director ASC',
+            default => 'ORDER BY m.title ASC'
+        };
+        
+        $sql = "SELECT m.*, g.name as genre_name 
+                FROM movies m
+                LEFT JOIN genres g ON m.genre_id = g.id 
+                $where 
+                $orderClause 
+                LIMIT 20";
+        
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute($params);
+            $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            echo json_encode([
+                'success' => true,
+                'movies' => $movies,
+                'count' => count($movies)
+            ]);
+            
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false,
+                'error' => 'Greška pri pretraživanju'
+            ]);
+        }
+        
+        exit;
+    }
+    
     public function show($id) {
         $stmt = $this->db->prepare("
             SELECT m.*, g.name as genre_name 

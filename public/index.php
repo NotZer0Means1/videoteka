@@ -36,13 +36,16 @@ switch ($page) {
         $controller->check();
         break;
         
-    case 'movies':
+    case 'movies':   
         require_once '../app/controllers/MovieController.php';
         $controller = new MovieController();
-        
         switch ($action) {
+            case 'ajax_search':
+                $controller->ajaxSearch();
+                break;
             case 'show':
-                $controller->show($_GET['id'] ?? null);
+                $id = $_GET['id'] ?? 0;
+                $controller->show($id);
                 break;
             case 'search_omdb':
                 $controller->searchOMDB();
@@ -51,7 +54,8 @@ switch ($page) {
                 $controller->addFromOMDB();
                 break;
             case 'delete':
-                $controller->delete($_GET['id'] ?? null);
+                $id = $_GET['id'] ?? 0;
+                $controller->delete($id);
                 break;
             default:
                 $controller->index();
@@ -115,6 +119,12 @@ switch ($page) {
     case 'docs':
         require_once '../app/controllers/DocumentationController.php';
         $controller = new DocumentationController();
+        $controller->index();
+        break;
+    
+    case 'author':
+        require_once '../app/controllers/AuthorController.php';
+        $controller = new AuthorController();
         $controller->index();
         break;
         
